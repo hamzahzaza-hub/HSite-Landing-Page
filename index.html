@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hsite | Academic Planning & Student Collaboration</title>
+<meta name="description" content="Hsite is an app for students: find study partners, form study groups, plan your remaining classes, evaluate transfer credits, and team up on side projects.">
+
+<!-- Open Graph / LinkedIn Sharing Metadata -->
+<meta property="og:title" content="Hsite | Academic Planning & Student Collaboration">
+<meta property="og:description" content="Connect with study partners, map out remaining degree requirements, evaluate transfer credits, and build side projects together.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="phone.png">
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: soft sea-glass ground; hero = copy left, phone right with the feature card tucked under it; then features, how it works, and a suggestion form. One light look by choice. */
+:root {
+  --accent: #4d8dff;
+  --accent-dark: #2F6FE4;
+  --accent-soft: #e8f0ff;
+  --mint: #2E9C76;
+  --mint-soft: #DDF4EA;
+  --sand: #B9772B;
+  --sand-soft: #FCEBD5;
+  --ink: #141814;
+  --body: #3a413c;
+  --muted: #5B6560;
+  --rule: #e3e7e3;
+  --ground: #E4F4F7;
+  --surface: #ffffff;
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body);
+  background-color: var(--ground);
+  background-image:
+    radial-gradient(48% 48% at 74% 30%, rgba(111, 191, 224, 0.85) 0%, rgba(111, 191, 224, 0) 100%),
+    radial-gradient(42% 38% at 58% 62%, rgba(127, 221, 180, 0.70) 0%, rgba(127, 221, 180, 0) 100%),
+    radial-gradient(34% 34% at 94% 8%, rgba(255, 217, 168, 0.85) 0%, rgba(255, 217, 168, 0) 100%),
+    radial-gradient(46% 48% at 6% 4%, rgba(185, 200, 247, 0.80) 0%, rgba(185, 200, 247, 0) 100%),
+    radial-gradient(40% 40% at 12% 70%, rgba(255, 209, 194, 0.55) 0%, rgba(255, 209, 194, 0) 100%),
+    radial-gradient(36% 34% at 40% 22%, rgba(159, 227, 232, 0.60) 0%, rgba(159, 227, 232, 0) 100%);
+  background-attachment: fixed;
+}
+a { color: var(--accent-dark); }
+a:hover { color: #1F55BD; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding-inline: 20px; }
+
+/* ---------- nav ---------- */
+.nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand-name { font-family: var(--display); font-weight: 700; font-size: 22px; }
+.nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-weight: 500; font-size: 15px; }
+.nav-links a { color: var(--ink); text-decoration: none; }
+.nav-links a:hover { color: var(--accent-dark); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 22px; border-radius: 999px;
+  font: 600 15px var(--sans); text-decoration: none; cursor: pointer; border: 1.5px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn-primary { background: var(--accent-dark); color: #fff; box-shadow: 0 8px 20px -8px rgba(47, 111, 228, 0.7); }
+.btn-primary:hover { background: #2560CC; color: #fff; transform: translateY(-1px); }
+.btn-ghost { background: rgba(255,255,255,0.75); color: var(--ink); border-color: rgba(20, 50, 80, 0.16); }
+.btn-ghost:hover { background: #fff; color: var(--ink); }
+.btn-sm { min-height: 40px; padding: 0 16px; font-size: 14px; }
+
+/* ---------- hero ---------- */
+.hero { display: flex; flex-wrap: wrap; align-items: center; gap: 40px; padding-block: 36px 72px; }
+.hero-copy { flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 22px; }
+.pill {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.8); border: 1px solid rgba(20,50,80,0.12); border-radius: 999px;
+  padding: 6px 12px 6px 8px; font-size: 13px; font-weight: 500; color: var(--ink);
+}
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px var(--mint-soft); }
+.hero h1 {
+  margin: 0; font-family: var(--display); font-weight: 700; color: var(--ink);
+  font-size: clamp(42px, 6vw, 72px); line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--accent-dark); }
+.hero-lede { margin: 0; font-size: clamp(17px, 1.6vw, 20px); color: var(--body); max-width: 34ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.hero-art { flex: 1 1 460px; min-width: 0; position: relative; display: flex; flex-direction: column; align-items: center; }
+.hero-art img.phone { width: 100%; max-width: 545px; height: auto; display: block; }
+
+/* ---------- feature card ---------- */
+.feature-card {
+  width: 380px;
+  max-width: calc(100% - 32px);
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow:
+    0 24px 48px -12px rgba(20, 32, 24, 0.22),
+    0 6px 14px rgba(20, 32, 24, 0.08),
+    inset 0 2px 8px rgba(20, 32, 24, 0.10),
+    inset 0 -2px 6px rgba(20, 32, 24, 0.06);
+}
+.hero-art .feature-card { margin-top: 12px; margin-left: -20%; position: relative; z-index: 2; }
+.feature-card__tag {
+  align-self: flex-start; background: var(--accent-soft); color: var(--accent-dark);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px; box-shadow: inset 0 1px 2px rgba(20, 32, 24, 0.12);
+}
+.feature-card__title { margin: 0; font-family: var(--display); font-weight: 600; font-size: 44px; line-height: 1.05; color: var(--ink); }
+.feature-card__rule { height: 1px; border: 0; margin: 0; background: var(--rule); }
+.feature-card__subtitle { margin: 0; font-size: 19px; font-weight: 600; color: var(--accent-dark); }
+.feature-card__list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: var(--body); }
+.feature-card__list li { display: flex; gap: 10px; align-items: baseline; }
+.feature-card__list li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); transform: translateY(-2px); }
+
+/* ---------- sections ---------- */
+section { scroll-margin-top: 20px; }
+.section { padding-block: 72px; }
+.section-head { display: flex; flex-direction: column; gap: 10px; max-width: 640px; margin-bottom: 36px; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-dark); }
+.section h2 { margin: 0; font-family: var(--display); font-weight: 700; color: var(--ink); font-size: clamp(32px, 4vw, 46px); line-height: 1.08; letter-spacing: -0.015em; text-wrap: balance; }
+.section-head p { margin: 0; font-size: 18px; max-width: 56ch; }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.feature {
+  background: rgba(255,255,255,0.86); border: 1px solid rgba(20,50,80,0.08); border-radius: 20px;
+  padding: 26px; display: flex; flex-direction: column; gap: 12px;
+}
+.feature .icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; }
+.icon.blue { background: var(--accent-soft); color: var(--accent-dark); }
+.icon.mint { background: var(--mint-soft); color: #1E7457; }
+.icon.sand { background: var(--sand-soft); color: #8A5513; }
+.icon.lilac { background: #ECE7FB; color: #5A45A8; }
+.feature h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 22px; color: var(--ink); }
+.feature p { margin: 0; font-size: 15px; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; counter-reset: step; }
+.steps li { counter-increment: step; display: flex; flex-direction: column; gap: 8px; padding-top: 18px; border-top: 2px solid rgba(20,50,80,0.14); }
+.steps li::before { content: "Step " counter(step); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-dark); }
+.steps h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 21px; color: var(--ink); }
+.steps p { margin: 0; font-size: 15px; }
+
+/* ---------- potential ---------- */
+.potential {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;
+}
+.potential-item {
+  position: relative; overflow: hidden;
+  border-radius: 22px; padding: 28px 26px 26px;
+  display: flex; flex-direction: column; gap: 10px;
+  border: 1px solid rgba(20,50,80,0.08);
+}
+.potential-item.p-blue  { background: linear-gradient(160deg, #F3F7FF 0%, #E3ECFF 100%); }
+.potential-item.p-mint  { background: linear-gradient(160deg, #F1FBF6 0%, #DAF2E6 100%); }
+.potential-item.p-sand  { background: linear-gradient(160deg, #FFF8EE 0%, #FBE9D2 100%); }
+.potential-item.p-lilac { background: linear-gradient(160deg, #F7F4FF 0%, #E9E2FB 100%); }
+.potential-label {
+  align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.75);
+}
+.p-blue .potential-label  { color: var(--accent-dark); }
+.p-mint .potential-label  { color: #1E7457; }
+.p-sand .potential-label  { color: #8A5513; }
+.p-lilac .potential-label { color: #5A45A8; }
+.potential-item h3 { margin: 4px 0 0; font-family: var(--display); font-weight: 600; font-size: 23px; line-height: 1.2; color: var(--ink); text-wrap: balance; }
+.potential-item p { margin: 0; font-size: 15px; }
+.potential-item svg { position: absolute; right: -14px; bottom: -14px; width: 96px; height: 96px; opacity: 0.12; pointer-events: none; }
+.p-blue svg { color: var(--accent-dark); } .p-mint svg { color: #1E7457; } .p-sand svg { color: #8A5513; } .p-lilac svg { color: #5A45A8; }
+
+/* ---------- suggestions ---------- */
+.suggest { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; background: rgba(255,255,255,0.88); border: 1px solid rgba(20,50,80,0.08); border-radius: 28px; padding: clamp(24px, 4vw, 48px); }
+.suggest-copy { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.suggest-copy h2 { margin: 0; }
+.suggest-copy p { margin: 0; font-size: 17px; }
+.email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.email {
+  font-weight: 600; color: var(--ink); background: var(--accent-soft); border-radius: 10px; padding: 8px 12px;
+  user-select: all; word-break: break-all;
+}
+.form { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 14px; font-weight: 600; color: var(--ink); }
+.field .hint { font-weight: 400; color: var(--muted); }
+.field input, .field select, .field textarea {
+  font: 400 16px var(--sans); color: var(--ink); background: #fff;
+  border: 1.5px solid #CCD6DE; border-radius: 12px; padding: 12px 14px; min-height: 48px; width: 100%;
+}
+.field textarea { min-height: 140px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(77, 141, 255, 0.18); }
+.choice { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; margin: 0; }
+.choice legend { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; padding: 0; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choice label { cursor: pointer; border: 1.5px solid #CCD6DE; border-radius: 999px; padding: 0 16px; min-height: 42px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 500; background: #fff; color: var(--body); }
+.choice input:checked + label { border-color: var(--accent-dark); background: var(--accent-soft); color: var(--accent-dark); }
+.choice input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.form-note { font-size: 13px; color: var(--muted); margin: 0; }
+.form-error { font-size: 14px; color: #B42318; margin: 0; }
+.status { font-size: 14px; color: var(--mint); font-weight: 500; }
+.form-success {
+  display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 14px;
+  background: var(--mint-soft); color: #165C44; border: 1px solid rgba(46, 156, 118, 0.3);
+}
+.form-success strong { font-size: 16px; color: #124D39; }
+.form-success p { margin: 0; font-size: 14px; }
+.fallback {
+  display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px;
+  background: #FFF7EC; border: 1px solid rgba(185, 119, 43, 0.3);
+}
+.fallback p { margin: 0; font-size: 14px; color: var(--body); }
+.fallback strong { color: var(--ink); }
+.fallback-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.fallback-actions .btn { min-height: 42px; padding: 0 14px; font-size: 14px; }
+.btn[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- footer ---------- */
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 32px 40px; border-top: 1px solid rgba(20,50,80,0.12); font-size: 14px; color: var(--muted); }
+
+@media (max-width: 760px) {
+  .hero { padding-block: 16px 48px; }
+  .hero-art .feature-card { margin-left: 0; margin-top: 12px; }
+  .section { padding-block: 52px; }
+  .nav-links .hide-sm { display: none; }
+}
+
+/* ---------- phone layout ---------- */
+@media (max-width: 600px) {
+  body { background-image: none; }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-color: var(--ground);
+    background-image:
+      radial-gradient(70% 45% at 85% 30%, rgba(111, 191, 224, 0.85) 0%, rgba(111, 191, 224, 0) 100%),
+      radial-gradient(70% 40% at 30% 85%, rgba(127, 221, 180, 0.70) 0%, rgba(127, 221, 180, 0) 100%),
+      radial-gradient(60% 30% at 100% 0%, rgba(255, 217, 168, 0.85) 0%, rgba(255, 217, 168, 0) 100%),
+      radial-gradient(70% 35% at 0% 0%, rgba(185, 200, 247, 0.80) 0%, rgba(185, 200, 247, 0) 100%),
+      radial-gradient(60% 35% at 0% 60%, rgba(255, 209, 194, 0.55) 0%, rgba(255, 209, 194, 0) 100%);
+  }
+
+  .wrap { padding-inline: 16px; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 20; flex-wrap: nowrap;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 10px) 10px;
+    margin-inline: -16px; padding-inline: 16px;
+    background: rgba(236, 247, 250, 0.82);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(20, 50, 80, 0.08);
+  }
+  .brand-name { font-size: 20px; }
+  .nav-links { flex-wrap: nowrap; gap: 14px; }
+  .nav-links .btn-sm { min-height: 40px; padding: 0 14px; }
+  section { scroll-margin-top: 72px; }
+
+  .hero { gap: 24px; padding-block: 20px 36px; }
+  .hero-copy { gap: 18px; }
+  .hero h1 { font-size: clamp(36px, 11vw, 46px); }
+  .hero-lede { font-size: 17px; max-width: none; }
+  .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hero-actions .btn { width: 100%; padding: 0 12px; min-height: 52px; }
+  .hero-art { flex-basis: auto; width: 100%; }
+  .hero-art img.phone { width: 108%; max-width: none; margin-inline: -4%; }
+  .hero-art .feature-card { margin: 12px auto 0; width: 100%; max-width: 380px; padding: 24px 22px; }
+  .feature-card__title { font-size: 38px; }
+
+  .section { padding-block: 40px; }
+  .section-head { margin-bottom: 22px; }
+  .section h2 { font-size: clamp(28px, 8.5vw, 34px); }
+  .section-head p { font-size: 16px; }
+
+  .features { grid-template-columns: 1fr; gap: 12px; }
+  .feature {
+    display: grid; grid-template-columns: 46px 1fr; column-gap: 14px; row-gap: 4px;
+    padding: 18px; border-radius: 18px; align-items: center;
+  }
+  .feature .icon { grid-row: span 1; }
+  .feature h3 { font-size: 19px; }
+  .feature p { grid-column: 1 / -1; margin-top: 6px; }
+
+  .potential { grid-template-columns: 1fr; gap: 12px; }
+  .potential-item { padding: 22px 20px; border-radius: 18px; }
+  .potential-item h3 { font-size: 20px; }
+  .potential-item svg { width: 76px; height: 76px; }
+
+  .steps { gap: 0; }
+  .steps li { padding-block: 16px; }
+  .steps h3 { font-size: 19px; }
+
+  .suggest { padding: 22px 18px; border-radius: 22px; gap: 24px; }
+  .suggest-copy p { font-size: 16px; }
+  .email-row { display: grid; grid-template-columns: 1fr; }
+  .email { text-align: center; font-size: 15px; }
+  .email-row .btn { width: 100%; min-height: 46px; }
+  .choice { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .choice legend { grid-column: 1 / -1; }
+  .choice label { justify-content: center; padding: 0 6px; min-height: 46px; font-size: 13.5px; text-align: center; }
+  .form-foot { flex-direction: column; align-items: stretch; }
+  .form-foot .btn { width: 100%; min-height: 54px; font-size: 16px; }
+  .form-note { text-align: center; }
+  .fallback-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .fallback-actions .btn { width: 100%; }
+
+  .footer { flex-direction: column; gap: 6px; padding-block: 24px calc(env(safe-area-inset-bottom, 0px) + 28px); }
+}
+
+@media (max-width: 360px) {
+  .nav-links a:not(.btn) { display: none; }
+  .hero-actions { grid-template-columns: 1fr; }
+  .choice { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Hsite home">
+      <span class="brand-name">Hsite</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#potential" class="hide-sm">Potential</a>
+      <a href="#how" class="hide-sm">How it works</a>
+      <a class="btn btn-primary btn-sm" href="#suggest">Suggest a feature</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <span class="pill"><span class="dot" aria-hidden="true"></span>In development, built by a student</span>
+        <h1 id="hero-title">Find your people. <em>Study together.</em> Know what's left.</h1>
+        <p class="hero-lede">Hsite helps students in the same major connect, form study groups, map out the classes and transfer credits they still need, and research and build projects together.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#features">See the features</a>
+          <a class="btn btn-ghost" href="#suggest">Share an idea</a>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <img class="phone" src="phone.png" width="916" height="765" alt="A phone with a small low-poly lighthouse and sea on its screen">
+        <article class="feature-card" aria-label="Hsite at a glance">
+          <span class="feature-card__tag">Application</span>
+          <h2 class="feature-card__title">Hsite</h2>
+          <hr class="feature-card__rule">
+          <h3 class="feature-card__subtitle">Built for students, together</h3>
+          <ul class="feature-card__list">
+            <li>Connect with study partners and form study groups</li>
+            <li>Plan your remaining classes for graduation</li>
+            <li>Create or join groups for side projects</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="features" aria-labelledby="features-title">
+      <div class="section-head">
+        <span class="eyebrow">Features</span>
+        <h2 id="features-title">What Hsite will do</h2>
+        <p>Everything you need to find classmates, bring in your academic record, stay on track for graduation, and build things outside of class, in one app.</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="icon blue" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14.6c2.6.2 4.4 1.9 5 4.9"/></svg>
+          </span>
+          <h3>Study partners and groups</h3>
+          <p>Find students in your major and your classes, then create or join a study group for a specific course.</p>
+        </article>
+        <article class="feature">
+          <span class="icon mint" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 2.5v4M16 2.5v4M8 14l2.5 2.5L16 12"/></svg>
+          </span>
+          <h3>Class planner</h3>
+          <p>Upload your degree audit or unofficial transcript, or start from your major's requirements, instead of typing in every class. See what's done, what's left, and plan the semesters ahead.</p>
+        </article>
+        <article class="feature">
+          <span class="icon sand" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>
+          </span>
+          <h3>Transfer plans</h3>
+          <p>Upload your transfer credit evaluation to see which courses came in as a direct match, which counted as electives, and which didn't transfer. Connect with students who transferred from the same schools.</p>
+        </article>
+        <article class="feature">
+          <span class="icon lilac" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
+          </span>
+          <h3>Goals</h3>
+          <p>Set your target graduation semester, plans to transfer, career interests, and limits like a work schedule. Hsite shapes your semester plan around them.</p>
+        </article>
+        <article class="feature">
+          <span class="icon sand" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4.5l-3 15"/></svg>
+          </span>
+          <h3>Side project groups</h3>
+          <p>Pitch an idea or join someone else's, and find teammates with the skills your project needs.</p>
+        </article>
+        <article class="feature">
+          <span class="icon blue" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
+          </span>
+          <h3>Major chat</h3>
+          <p>Talk with students in your major about classes, professors, and what to take next.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="potential" aria-labelledby="potential-title">
+      <div class="section-head">
+        <span class="eyebrow">Potential</span>
+        <h2 id="potential-title">Where Hsite could take you</h2>
+        <p>Beyond classes and planning, Hsite is a way to meet the students who care about the same things you do, and start something with them.</p>
+      </div>
+      <div class="potential">
+        <article class="potential-item p-blue">
+          <span class="potential-label">Potential</span>
+          <h3>Work on projects that excite more than just you</h3>
+          <p>Share an idea and see who else is interested. Build the projects that catch other students' attention too, not just your own.</p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2l.1.7h4.8l.1-.7c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3z"/></svg>
+        </article>
+        <article class="potential-item p-mint">
+          <span class="potential-label">Potential</span>
+          <h3>Find peers with similar interests</h3>
+          <p>Connect with students who share your interests, whether that's game design, robotics, health tech, or something no one else in your classes is into.</p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2.5 19c.5-3 2.7-4.5 5.5-4.5 1.5 0 2.9.4 4 1.3 1.1-.9 2.5-1.3 4-1.3 2.8 0 5 1.5 5.5 4.5"/></svg>
+        </article>
+        <article class="potential-item p-sand">
+          <span class="potential-label">Potential</span>
+          <h3>Research together</h3>
+          <p>Team up with students curious about the same questions, share sources and findings, and explore a topic more deeply than you could alone.</p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5M8 10.5h5M10.5 8v5"/></svg>
+        </article>
+        <article class="potential-item p-lilac">
+          <span class="potential-label">Potential</span>
+          <h3>Build something together</h3>
+          <p>Turn a shared interest into something real, like an app, a club, a competition entry, or a portfolio project you made as a team.</p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8.5 4.8v9.4L12 21.5l-8.5-4.8V7.3z"/><path d="M3.5 7.3L12 12l8.5-4.7M12 12v9.5"/></svg>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="how" aria-labelledby="how-title">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2 id="how-title">From sign-up to study group</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Pick your school and major</h3>
+          <p>Join with your school and major so Hsite can connect you with the right students.</p>
+        </li>
+        <li>
+          <h3>Bring in your record</h3>
+          <p>Upload your degree audit, transcript, or transfer credit evaluation, or pick your major's requirements. Check the list, then set your graduation goal. Your grades stay private.</p>
+        </li>
+        <li>
+          <h3>Team up</h3>
+          <p>Join study groups, chat with your major, and start or join a side project.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section" id="suggest" aria-labelledby="suggest-title">
+      <div class="suggest">
+        <div class="suggest-copy">
+          <span class="eyebrow">Help shape Hsite</span>
+          <h2 id="suggest-title" class="section-title">What should Hsite do for you?</h2>
+          <p>Hsite is still being built, and ideas from students decide what comes next. Send a feature request or a suggestion and it goes straight to my inbox.</p>
+          <div class="email-row">
+            <span class="email" id="email-text">hamzah.zaza001@umb.edu</span>
+            <button class="btn btn-ghost btn-sm" type="button" id="copy-email">Copy email</button>
+          </div>
+          <span class="status" id="copy-status" role="status"></span>
+        </div>
+
+        <form class="form" id="suggest-form" novalidate>
+          <fieldset class="choice">
+            <legend>What are you sending?</legend>
+            <input type="radio" name="kind" id="kind-feature" value="Feature idea" checked>
+            <label for="kind-feature">Feature idea</label>
+            <input type="radio" name="kind" id="kind-suggestion" value="Suggestion">
+            <label for="kind-suggestion">Suggestion</label>
+            <input type="radio" name="kind" id="kind-question" value="Question">
+            <label for="kind-question">Question</label>
+          </fieldset>
+          <div class="field">
+            <label for="s-name">Your name <span class="hint">(optional)</span></label>
+            <input id="s-name" name="name" type="text" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="s-school">School and major <span class="hint">(optional)</span></label>
+            <input id="s-school" name="school" type="text" placeholder="e.g. UMass Boston, Computer Science">
+          </div>
+          <div class="field">
+            <label for="s-message">Your idea</label>
+            <textarea id="s-message" name="message" required placeholder="Describe the feature or suggestion, and how it would help you."></textarea>
+          </div>
+          <p class="form-error" id="form-error" role="alert" hidden>Write your idea in the box above before sending.</p>
+          <div class="hp" aria-hidden="true">
+            <label for="s-website">Leave this empty</label>
+            <input id="s-website" name="_honey" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit" id="send-btn">Send my idea</button>
+            <p class="form-note">Goes straight to my inbox. No email app needed.</p>
+          </div>
+          <div class="form-success" id="form-success" role="status" hidden>
+            <strong>Thanks, your idea was sent.</strong>
+            <p>I read every message. Feel free to send another one anytime.</p>
+          </div>
+          <div class="fallback" id="fallback" hidden>
+            <p><strong>That didn't go through.</strong> Send it from your own email instead. Your message is already filled in:</p>
+            <div class="fallback-actions">
+              <a class="btn btn-ghost" id="fb-gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
+              <a class="btn btn-ghost" id="fb-outlook" href="#" target="_blank" rel="noopener">Open in Outlook</a>
+              <a class="btn btn-ghost" id="fb-mailto" href="#">Email app</a>
+              <button class="btn btn-ghost" type="button" id="fb-copy">Copy message</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Hsite · a student project</span>
+    <span>Ideas and feedback: <a href="mailto:hamzah.zaza001@umb.edu">hamzah.zaza001@umb.edu</a></span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var EMAIL = 'hamzah.zaza001@umb.edu';
+  var form = document.getElementById('suggest-form');
+  var err = document.getElementById('form-error');
+  var msg = document.getElementById('s-message');
+  var copyStatus = document.getElementById('copy-status');
+
+  var sendBtn = document.getElementById('send-btn');
+  var success = document.getElementById('form-success');
+  var fallback = document.getElementById('fallback');
+  var lastSubject = '', lastBody = '';
+
+  function buildFallback(subject, body) {
+    var to = encodeURIComponent(EMAIL), su = encodeURIComponent(subject), bo = encodeURIComponent(body);
+    document.getElementById('fb-gmail').href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + to + '&su=' + su + '&body=' + bo;
+    document.getElementById('fb-outlook').href = 'https://outlook.office.com/mail/deeplink/compose?to=' + to + '&subject=' + su + '&body=' + bo;
+    document.getElementById('fb-mailto').href = 'mailto:' + EMAIL + '?subject=' + su + '&body=' + bo;
+    fallback.hidden = false;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = msg.value.trim();
+    if (!text) { err.hidden = false; msg.focus(); return; }
+    err.hidden = true; success.hidden = true; fallback.hidden = true;
+    if (document.getElementById('s-website').value) return; // spam bot filled the hidden field
+
+    var kind = (form.querySelector('input[name="kind"]:checked') || {}).value || 'Feature idea';
+    var name = document.getElementById('s-name').value.trim();
+    var school = document.getElementById('s-school').value.trim();
+    lastSubject = 'Hsite ' + kind.toLowerCase() + (name ? ' from ' + name : '');
+    lastBody = text + '\n\n' + (name ? 'Name: ' + name + '\n' : '') + (school ? 'School / major: ' + school + '\n' : '');
+
+    sendBtn.disabled = true; sendBtn.textContent = 'Sending…';
+    fetch('https://formsubmit.co/ajax/' + EMAIL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: lastSubject, _template: 'table', _captcha: 'false',
+        Type: kind, Name: name || '(not given)', 'School / major': school || '(not given)', Message: text
+      })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data && (data.success === true || data.success === 'true')) {
+        success.hidden = false; form.reset(); document.getElementById('kind-feature').checked = true;
+      } else { buildFallback(lastSubject, lastBody); }
+    }).catch(function () {
+      buildFallback(lastSubject, lastBody);
+    }).then(function () {
+      sendBtn.disabled = false; sendBtn.textContent = 'Send my idea';
+    });
+  });
+
+  document.getElementById('fb-copy').addEventListener('click', function () {
+    var full = 'To: ' + EMAIL + '\nSubject: ' + lastSubject + '\n\n' + lastBody;
+    var btn = this;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(full).then(function () { btn.textContent = 'Copied'; }, function () { btn.textContent = 'Copy failed'; });
+    }
+  });
+
+  msg.addEventListener('input', function () { if (msg.value.trim()) err.hidden = true; });
+
+  document.getElementById('copy-email').addEventListener('click', function () {
+    var el = document.getElementById('email-text');
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyStatus.textContent = 'Address selected. Press Ctrl+C (or Cmd+C) to copy.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(EMAIL).then(function () { copyStatus.textContent = 'Email address copied.'; }, selectIt);
+    } else { selectIt(); }
+  });
+})();
+</script>
+</body>
+</html>
